@@ -33,7 +33,7 @@ class GlobalErrorBoundary extends React.Component {
   }
 }
 
-function AdminLayout({ children, activeTab, setActiveTab, onLogout }) {
+function AdminLayout({ children, activeTab, setActiveTab }) {
   return (
     <div className="admin-container" style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-dark)' }}>
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -50,7 +50,6 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleLogin = () => setIsAuthenticated(true);
-  const handleLogout = () => setIsAuthenticated(false);
 
   return (
     <Router>
@@ -73,7 +72,7 @@ function App() {
               !isAuthenticated ? (
                 <Login onLogin={handleLogin} />
               ) : (
-                <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout}>
+                <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
                   {activeTab === 'dashboard' && <Dashboard />}
                   {activeTab === 'stock' && <Stock />}
                   {activeTab === 'sales' && <Sales />}
