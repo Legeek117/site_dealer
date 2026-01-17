@@ -1,107 +1,122 @@
 export const MOCK_IPHONES = [
   {
     id: "1",
+    brand: "Apple",
     model: "iPhone 15 Pro",
     capacity: "256GB",
     color: "Natural Titanium",
-    condition: "Neuf",
+    imei: "358291002233445",
     batteryLevel: 100,
     faceId: "OK",
-    imei: "354678129034567",
+    condition: "Scellé",
     purchasePrice: 1200,
     sellingPrice: 1500,
     status: "Disponible",
     createdAt: "2024-01-10T10:00:00Z",
     defects: [],
-    images: ["https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800"]
+    images: [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1695048133062-8495f5903b71?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1695048132717-5784ea3751a0?auto=format&fit=crop&q=80&w=800"
+    ]
   },
   {
     id: "2",
+    brand: "Apple",
     model: "iPhone 13",
     capacity: "128GB",
     color: "Midnight",
-    condition: "Occasion",
+    imei: "359922001144556",
     batteryLevel: 88,
     faceId: "OK",
-    imei: "359988129034111",
+    condition: "Occasion",
     purchasePrice: 450,
     sellingPrice: 600,
     status: "Disponible",
     createdAt: "2024-01-12T14:30:00Z",
     defects: ["rayure_legere_ecran"],
-    images: ["https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&q=80&w=800"]
+    images: [
+      "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1591337676887-a217a6970c8a?auto=format&fit=crop&q=80&w=800"
+    ]
   },
   {
     id: "3",
+    brand: "Apple",
     model: "iPhone 11",
     capacity: "64GB",
     color: "White",
-    condition: "Reconditionné",
-    batteryLevel: 92,
-    faceId: "Non",
-    imei: "351122129034222",
+    imei: "351122009988776",
+    batteryLevel: 82,
+    faceId: "Defectueux",
+    condition: "Occasion",
     purchasePrice: 280,
     sellingPrice: 400,
     status: "Vendu",
     createdAt: "2024-01-05T09:15:00Z",
     defects: ["fissure_arriere"],
-    images: ["https://images.unsplash.com/photo-1574315042633-89d5f00e2387?auto=format&fit=crop&q=80&w=800"]
+    images: [
+      "https://images.unsplash.com/photo-1574315042633-89d5f00e2387?auto=format&fit=crop&q=80&w=800"
+    ]
+  },
+  {
+    id: "4",
+    brand: "Samsung",
+    model: "Galaxy S23 Ultra",
+    capacity: "512GB",
+    color: "Phantom Black",
+    imei: "357711223344556",
+    batteryLevel: 95,
+    faceId: "OK", // Biometrics for Samsung
+    condition: "Occasion",
+    purchasePrice: 700,
+    sellingPrice: 950,
+    status: "Disponible",
+    createdAt: "2024-01-15T11:00:00Z",
+    defects: [],
+    images: [
+      "https://images.unsplash.com/photo-1678911820864-e2c567c655d7?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1678911820194-e3c79e65839b?auto=format&fit=crop&q=80&w=800"
+    ]
+  },
+  {
+    id: "5",
+    brand: "Samsung",
+    model: "Galaxy A54",
+    capacity: "128GB",
+    color: "Awesome Violet",
+    imei: "351122334455667",
+    batteryLevel: 100,
+    faceId: "OK",
+    condition: "Scellé",
+    purchasePrice: 200,
+    sellingPrice: 350,
+    status: "Disponible",
+    createdAt: "2024-01-16T09:00:00Z",
+    defects: [],
+    images: [
+      "https://images.unsplash.com/photo-1679051390466-99b3d9021e15?auto=format&fit=crop&q=80&w=800"
+    ]
   }
 ];
 
 export const MOCK_CUSTOMERS = [
-  {
-    id: "c1",
-    name: "Moussa Diop",
-    phone: "+221770000000",
-    purchases: ["3"],
-    notes: "Client régulier"
-  },
-  {
-    id: "c2",
-    name: "Fatou Kane",
-    phone: "+221781112233",
-    purchases: [],
-    notes: ""
-  }
+  { id: "c1", name: "Moussa Diop", phone: "+221 77 123 45 67", totalPurchases: 2, notes: "Client fidèle, préfère le paiement cash." },
+  { id: "c2", name: "Fatou Kane", phone: "+221 78 987 65 43", totalPurchases: 1, notes: "A pris à crédit, bon payeur." },
+  { id: "c3", name: "Ibrahim Traoré", phone: "+223 66 111 22 33", totalPurchases: 0, notes: "Potentiel client pour iPhone 15." }
 ];
 
 export const MOCK_SALES = [
-  {
-    id: "s1",
-    iphoneId: "3",
-    customerId: "c1",
-    totalAmount: 400,
-    paidAmount: 400,
-    paymentType: "Cash",
-    date: "2024-01-15T16:00:00Z",
-    status: "Payé"
-  },
-  {
-    id: "s2",
-    iphoneId: "2",
-    customerId: "c2",
-    totalAmount: 600,
-    paidAmount: 200,
-    paymentType: "Crédit",
-    remainingAmount: 400,
-    dueDate: "2024-02-15T00:00:00Z",
-    date: "2024-01-16T11:00:00Z",
-    status: "En cours"
-  }
+  { id: "s1", customerId: "c1", iphoneId: "3", amount: 400, totalAmount: 400, paidAmount: 400, date: "2024-01-05", paymentType: "Cash", status: "Payé" },
+  { id: "s2", customerId: "c2", iphoneId: "2", amount: 600, totalAmount: 600, paidAmount: 200, date: "2024-01-12", paymentType: "Crédit", status: "Partiel" }
 ];
 
 export const MOCK_STATS = {
-  totalStock: 2,
+  totalStock: 5,
   totalSalesMonth: 1000,
   pendingCredits: 400,
   recentSales: [
-    { date: "2024-01-10", amount: 1500 },
-    { date: "2024-01-11", amount: 1200 },
-    { date: "2024-01-12", amount: 1800 },
-    { date: "2024-01-13", amount: 1400 },
-    { date: "2024-01-14", amount: 1600 },
-    { date: "2024-01-15", amount: 400 },
-    { date: "2024-01-16", amount: 200 }
+    { date: "05 Jan", amount: 400 },
+    { date: "12 Jan", amount: 200 }
   ]
 };
