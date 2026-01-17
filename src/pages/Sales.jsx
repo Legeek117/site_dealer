@@ -4,7 +4,7 @@ import { Receipt, Share2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const Sales = () => {
-    const [sales, setSales] = useState(MOCK_SALES);
+    const [sales] = useState(MOCK_SALES);
     const [selectedSale, setSelectedSale] = useState(null);
 
     const handleGenerateReceipt = (sale) => {
@@ -148,25 +148,3 @@ const Sales = () => {
 };
 
 export default Sales;
-
-const styles = `
-    .sales-layout {
-        grid-template-columns: 2fr 1.2fr;
-    }
-    .receipt-preview {
-        position: sticky;
-        top: 20px;
-    }
-    @media (max-width: 1024px) {
-        .sales-layout {
-            grid-template-columns: 1fr;
-        }
-        .receipt-preview {
-            position: relative;
-            top: 0;
-        }
-    }
-`;
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);

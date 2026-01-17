@@ -77,8 +77,8 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="showcase-text text-center">
-                        <h2 style={{ fontSize: '56px', marginBottom: '20px', lineHeight: '1.1' }}>Le choix sans compromis.</h2>
-                        <p className="text-secondary" style={{ marginBottom: '30px', fontSize: '20px' }}>
+                        <h2 className="home-showcase-title" style={{ fontSize: '56px', marginBottom: '20px', lineHeight: '1.1' }}>Le choix sans compromis.</h2>
+                        <p className="text-secondary home-showcase-subtitle" style={{ marginBottom: '30px', fontSize: '20px' }}>
                             Que vous cherchiez la puissance pure de l'iPhone 15 Pro ou l'élégance de nos modèles reconditionnés.
                         </p>
                         <div className="spec-list flex-center flex-column">
@@ -93,8 +93,8 @@ const Home = () => {
             {/* Call to Action */}
             <section className="cta-banner">
                 <div className="container text-center">
-                    <h2 style={{ fontSize: '48px', marginBottom: '20px' }}>Prêt à changer de dimension ?</h2>
-                    <p className="text-secondary" style={{ marginBottom: '40px', fontSize: '20px' }}>Votre prochain smartphone vous attend à partir de 150 000 CFA.</p>
+                    <h2 className="home-cta-title" style={{ fontSize: '48px', marginBottom: '20px' }}>Prêt à changer de dimension ?</h2>
+                    <p className="text-secondary home-cta-subtitle" style={{ marginBottom: '40px', fontSize: '20px' }}>Votre prochain smartphone vous attend à partir de 150 000 CFA.</p>
                     <Link to="/catalog" className="btn-primary-large" style={{ display: 'inline-flex' }}>
                         Voir tout le stock maintenant
                     </Link>
@@ -294,6 +294,10 @@ const Home = () => {
                     .btn-primary-large { padding: 15px 30px; font-size: 16px; }
                     .sketchfab-embed-wrapper-hero { height: 60vh; top: 0; }
                     .hero-visual { opacity: 0.3; }
+                    .home-showcase-title { font-size: 32px; }
+                    .home-showcase-subtitle { font-size: 16px; }
+                    .home-cta-title { font-size: 32px; }
+                    .home-cta-subtitle { font-size: 16px; }
                 }
             `}</style>
         </div>

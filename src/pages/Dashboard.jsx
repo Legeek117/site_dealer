@@ -192,18 +192,3 @@ const AlertItem = ({ type, title, desc }) => {
 };
 
 export default Dashboard;
-
-const styles = `
-    .dashboard-layout {
-        grid-template-columns: 2fr 1fr;
-        gap: 24px;
-    }
-    @media (max-width: 1024px) {
-        .dashboard-layout {
-            grid-template-columns: 1fr;
-        }
-    }
-`;
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);

@@ -150,7 +150,7 @@ const Stock = () => {
                                 <ImageCarousel images={selectedIPhone.images} />
                             </div>
 
-                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
                                 <SpecCard icon={<Battery size={20} color="var(--success)" />} label="Santé" value={`${selectedIPhone.batteryLevel}%`} />
                                 <SpecCard icon={<Smartphone size={20} color="var(--primary)" />} label="Identité" value={selectedIPhone.brand} />
                                 <SpecCard icon={<ShieldCheck size={20} color="var(--warning)" />} label="État" value={selectedIPhone.condition} />
@@ -177,7 +177,7 @@ const Stock = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+                                <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '30px' }}>
                                     <div className="flex-column gap-15">
                                         <InfoRow label="IMEI" value={selectedIPhone.imei} />
                                         <InfoRow label="Modèle" value={selectedIPhone.model} />
@@ -223,7 +223,7 @@ const Stock = () => {
                         </div>
 
                         <form className="flex-column gap-20" onSubmit={handleSaveProduct}>
-                            <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
                                 <FormGroup label="Marque">
                                     <select value={newProduct.brand} onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })} className="form-input">
                                         <option>Apple</option>
@@ -240,7 +240,7 @@ const Stock = () => {
                                 </FormGroup>
                             </div>
 
-                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
                                 <FormGroup label="Capacité">
                                     <select className="form-input" value={newProduct.capacity} onChange={(e) => setNewProduct({ ...newProduct, capacity: e.target.value })}>
                                         <option>64GB</option>
@@ -262,7 +262,7 @@ const Stock = () => {
                                 <input type="text" placeholder="Numéro IMEI" className="form-input" value={newProduct.imei} onChange={(e) => setNewProduct({ ...newProduct, imei: e.target.value })} />
                             </FormGroup>
 
-                            <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
                                 <FormGroup label="Prix d'achat (CFA)">
                                     <input type="number" className="form-input" value={newProduct.purchasePrice} onChange={(e) => setNewProduct({ ...newProduct, purchasePrice: e.target.value })} />
                                 </FormGroup>

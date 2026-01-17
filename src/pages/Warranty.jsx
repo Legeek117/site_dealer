@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MOCK_SALES, MOCK_IPHONES, MOCK_CUSTOMERS } from '../data/mockData';
 import { ShieldCheck, Clock, CheckCircle2, Search } from 'lucide-react';
 

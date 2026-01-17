@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MOCK_IPHONES } from '../data/mockData';
 import { Search, ChevronRight, Star, Image as ImageIcon, Filter, DollarSign, Smartphone, Zap, Battery } from 'lucide-react';
 
-const Catalog = ({ onSelectProduct }) => {
+const Catalog = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedBrand, setSelectedBrand] = useState('Tous');
@@ -37,9 +37,9 @@ const Catalog = ({ onSelectProduct }) => {
     };
 
     return (
-        <div className="catalog-container" style={{ padding: '0px 0 100px 0' }}>
+        <div className="catalog-container" style={{ padding: '0 0 100px 0' }}>
             {/* Hero Section */}
-            <section className="hero fade-in" style={{
+            <section className="hero fade-in catalog-hero" style={{
                 minHeight: '450px',
                 borderRadius: '30px',
                 background: 'linear-gradient(135deg, #050505 0%, #1c1c1e 100%)',
@@ -77,8 +77,8 @@ const Catalog = ({ onSelectProduct }) => {
                 </div>
 
                 {/* Abstract Visual Elements */}
-                <div style={{ position: 'absolute', right: '5%', top: '50%', transform: 'translateY(-50%)', opacity: 0.1, zIndex: 1 }}>
-                    <Smartphone size={400} strokeWidth={0.5} />
+                <div className="catalog-hero-visual" style={{ position: 'absolute', right: '5%', top: '50%', transform: 'translateY(-50%)', opacity: 0.1, zIndex: 1 }}>
+                    <Smartphone size={320} strokeWidth={0.5} />
                 </div>
             </section>
 
@@ -313,28 +313,45 @@ const Catalog = ({ onSelectProduct }) => {
                     </div>
                 )}
             </div>
+            <style>{`
+                .catalog-container {
+                    padding-top: 100px;
+                    padding-inline: 5%;
+                }
+                @media (max-width: 1024px) {
+                    .catalog-hero {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding: 40px 24px;
+                    }
+                    .catalog-hero h1 {
+                        font-size: 42px;
+                        line-height: 1.1;
+                    }
+                    .catalog-hero p {
+                        font-size: 16px;
+                    }
+                }
+                @media (max-width: 768px) {
+                    .catalog-container {
+                        padding-inline: 15px;
+                        padding-top: 90px;
+                    }
+                    .catalog-hero {
+                        min-height: auto;
+                        margin-bottom: 40px;
+                    }
+                    .catalog-hero h1 {
+                        font-size: 32px;
+                        letter-spacing: -1px;
+                    }
+                    .catalog-hero-visual {
+                        display: none;
+                    }
+                }
+            `}</style>
         </div>
     );
 };
-
-// Add responsive styles directly to the component or ensure they are in index.css
-const styles = `
-    .grid-responsive-filters {
-        grid-template-columns: 1fr 1fr 1fr 1.5fr;
-    }
-    @media (max-width: 1024px) {
-        .grid-responsive-filters {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-    @media (max-width: 768px) {
-        .grid-responsive-filters {
-            grid-template-columns: 1fr;
-        }
-    }
-`;
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
 
 export default Catalog;

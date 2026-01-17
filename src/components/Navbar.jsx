@@ -104,6 +104,7 @@ const Navbar = () => {
                     gap: 10px;
                     text-decoration: none;
                     color: white;
+                    white-space: nowrap;
                 }
                 .navbar-menu {
                     display: flex;
@@ -148,7 +149,6 @@ const Navbar = () => {
                     padding: 20px 5%;
                     gap: 20px;
                     z-index: 999;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 }
                 .mobile-nav-link {
                     font-size: 24px;
@@ -156,15 +156,24 @@ const Navbar = () => {
                     color: white;
                     text-decoration: none;
                 }
-                .mobile-only {
-                    display: none;
-                }
                 @media (max-width: 768px) {
-                    .desktop-only {
-                        display: none;
+                    .navbar {
+                        height: 64px;
+                        padding: 0 16px;
                     }
-                    .mobile-only {
-                        display: flex;
+                    .navbar-scrolled {
+                        height: 64px;
+                        border-bottom: none;
+                    }
+                    .navbar-logo span {
+                        font-size: 18px;
+                    }
+                    .mobile-menu-overlay {
+                        top: 64px;
+                        padding: 16px;
+                    }
+                    .mobile-nav-link {
+                        font-size: 20px;
                     }
                 }
             `}</style>

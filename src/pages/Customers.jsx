@@ -90,7 +90,7 @@ const Customers = () => {
                                     </button>
                                 </div>
 
-                                <div className="grid-3" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '15px', marginBottom: '20px' }}>
+                                <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '15px', marginBottom: '20px' }}>
                                     <div style={{ padding: '15px', backgroundColor: 'var(--bg-hover)', borderRadius: '12px' }}>
                                         <p style={{ fontSize: '12px', color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Téléphone</p>
                                         <p style={{ fontWeight: '600', fontSize: '16px' }}>{selectedCustomer.phone}</p>
@@ -152,18 +152,3 @@ const Customers = () => {
 };
 
 export default Customers;
-
-const styles = `
-    .customers-layout {
-        grid-template-columns: minmax(300px, 1fr) 2fr;
-        gap: 24px;
-    }
-    @media (max-width: 1024px) {
-        .customers-layout {
-            grid-template-columns: 1fr;
-        }
-    }
-`;
-const styleSheet = document.createElement("style");
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
