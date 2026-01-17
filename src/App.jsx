@@ -4,6 +4,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Stock from './pages/Stock';
 import Sales from './pages/Sales';
+import Customers from './pages/Customers';
+import Warranty from './pages/Warranty';
 import Catalog from './pages/Catalog';
 import ProductDetail from './pages/ProductDetail';
 import Login from './pages/Login';
@@ -75,8 +77,8 @@ function App() {
                   {activeTab === 'dashboard' && <Dashboard />}
                   {activeTab === 'stock' && <Stock />}
                   {activeTab === 'sales' && <Sales />}
-                  {activeTab === 'customers' && <div className="placeholder" style={{ padding: '40px', textAlign: 'center' }}><h2>Gestion Clients (À venir)</h2></div>}
-                  {activeTab === 'warranty' && <div className="placeholder" style={{ padding: '40px', textAlign: 'center' }}><h2>Garanties (À venir)</h2></div>}
+                  {activeTab === 'customers' && <Customers />}
+                  {activeTab === 'warranty' && <Warranty />}
                   {activeTab === 'settings' && <div className="placeholder" style={{ padding: '40px', textAlign: 'center' }}><h2>Paramètres (À venir)</h2></div>}
                 </AdminLayout>
               )
