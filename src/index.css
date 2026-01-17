@@ -93,8 +93,36 @@ body {
 
 .grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.page-container {
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 20px 15px;
+    /* Reduced padding on mobile */
+    padding-top: 90px;
+    /* Ensure content is below fixed navbar */
+  }
 }
 
 /* --- Components --- */
@@ -426,13 +454,23 @@ h3 {
   }
 
   .nav-footer {
-    display: none;
+    display: none !important;
   }
 
   .main-content {
     margin-left: 0;
     padding: 15px;
-    padding-bottom: 100px;
+    /* Reduced padding on mobile */
+    padding-bottom: 90px;
+    width: 100%;
+  }
+
+  .admin-container {
+    flex-direction: column;
+  }
+
+  .sidebar-container {
+    padding: 10px 20px;
   }
 
   .grid-3 {

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { MOCK_IPHONES } from '../data/mockData';
-import { Search, Plus, Battery, Smartphone, ShieldCheck, X, Camera, Save } from 'lucide-react';
+import { Search, Plus, Battery, Smartphone, ShieldCheck, X, Camera, Save, Upload, Trash2, Edit } from 'lucide-react';
 import ImageCarousel from '../components/ImageCarousel';
 
 const Stock = () => {
     const [selectedIPhone, setSelectedIPhone] = useState(MOCK_IPHONES[0]);
     const [searchTerm, setSearchTerm] = useState('');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false); // Track if we are editing
 
-    // Form state correctly handling multiple images
-    const [newProduct, setNewProduct] = useState({
+    // Form state
+    const initialProductState = {
         model: '',
         brand: 'Apple',
         capacity: '128GB',
@@ -19,8 +20,10 @@ const Stock = () => {
         condition: 'Scellé',
         purchasePrice: '',
         sellingPrice: '',
-        images: [''] // Start with one empty string for the first image URL
-    });
+        images: ['']
+    };
+
+    const [newProduct, setNewProduct] = useState(initialProductState);
 
     const filteredStock = MOCK_IPHONES.filter(item =>
         item.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -28,19 +31,58 @@ const Stock = () => {
         item.imei.includes(searchTerm)
     );
 
-    const handleAddImageUrl = () => {
-        setNewProduct({ ...newProduct, images: [...newProduct.images, ''] });
-    };
-
-    const handleImageUrlChange = (index, value) => {
-        const updatedImages = [...newProduct.images];
-        updatedImages[index] = value;
-        setNewProduct({ ...newProduct, images: updatedImages });
+    const handleImageUpload = (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setNewProduct(prev => ({
+                    ...prev,
+                    images: [...prev.images.filter(img => img !== ''), reader.result]
+                }));
+            };
+            reader.readAsDataURL(file);
+        });
     };
 
     const handleRemoveImage = (index) => {
         const updatedImages = newProduct.images.filter((_, i) => i !== index);
-        setNewProduct({ ...newProduct, images: updatedImages.length ? updatedImages : [''] });
+        setNewProduct({ ...newProduct, images: updatedImages.length ? updatedImages : [] });
+    };
+
+    const handleEditProduct = () => {
+        setNewProduct(selectedIPhone);
+        setIsEditing(true);
+        setIsAddModalOpen(true);
+    };
+
+    const handleDeleteProduct = () => {
+        if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'${selectedIPhone.model} ?`)) {
+            // In a real app, this would delete from the backend
+            alert('Produit supprimé (Simulation)');
+            setSelectedIPhone(null);
+        }
+    };
+
+    const handleSaveProduct = (e) => {
+        e.preventDefault();
+        // In a real app, this would be an API call
+        if (isEditing) {
+            alert('Produit modifié avec succès ! (Simulation)');
+            // Update the selected product with the new values locally to show immediate feedback
+            setSelectedIPhone({ ...newProduct });
+        } else {
+            alert('Nouveau produit ajouté ! (Simulation)');
+        }
+        setIsAddModalOpen(false);
+        setNewProduct(initialProductState); // Reset form
+        setIsEditing(false);
+    };
+
+    const openAddModal = () => {
+        setNewProduct(initialProductState);
+        setIsEditing(false);
+        setIsAddModalOpen(true);
     };
 
     return (
@@ -50,12 +92,12 @@ const Stock = () => {
                     <h1>Gestion du Stock</h1>
                     <p className="text-secondary">{MOCK_IPHONES.length} appareils au total • {MOCK_IPHONES.filter(i => i.status === 'Disponible').length} disponibles</p>
                 </div>
-                <button onClick={() => setIsAddModalOpen(true)} className="btn-primary flex-center gap-10">
+                <button onClick={openAddModal} className="btn-primary flex-center gap-10">
                     <Plus size={20} /> Ajouter un Produit
                 </button>
             </header>
 
-            <div className="grid-3" style={{ gridTemplateColumns: 'minmax(300px, 1fr) 2fr', alignItems: 'start' }}>
+            <div className="grid-3 stock-layout">
                 {/* Sidebar: List */}
                 <div className="flex-column gap-20">
                     <div className="glass-card" style={{ padding: '15px' }}>
@@ -117,7 +159,22 @@ const Stock = () => {
                             <div className="glass-card" style={{ padding: '30px' }}>
                                 <div className="flex-between" style={{ marginBottom: '25px' }}>
                                     <h3>Informations Techniques</h3>
-                                    <button className="text-primary" style={{ background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}>Modifier</button>
+                                    <div className="flex-center gap-10">
+                                        <button
+                                            onClick={handleEditProduct}
+                                            className="text-primary flex-center gap-5"
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}
+                                        >
+                                            <Edit size={16} /> Modifier
+                                        </button>
+                                        <button
+                                            onClick={handleDeleteProduct}
+                                            className="text-danger flex-center gap-5"
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}
+                                        >
+                                            <Trash2 size={16} /> Supprimer
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
@@ -159,19 +216,22 @@ const Stock = () => {
                 <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
                     <div className="glass-card slide-up" style={{ width: '100%', maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto', padding: '40px' }}>
                         <div className="flex-between" style={{ marginBottom: '30px' }}>
-                            <h2>Ajouter un Nouveau Produit</h2>
+                            <h2>{isEditing ? 'Modifier le Produit' : 'Ajouter un Nouveau Produit'}</h2>
                             <button onClick={() => setIsAddModalOpen(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
                                 <X size={24} />
                             </button>
                         </div>
 
-                        <form className="flex-column gap-20">
+                        <form className="flex-column gap-20" onSubmit={handleSaveProduct}>
                             <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr' }}>
                                 <FormGroup label="Marque">
                                     <select value={newProduct.brand} onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })} className="form-input">
                                         <option>Apple</option>
                                         <option>Samsung</option>
                                         <option>Google</option>
+                                        <option>Redmi</option>
+                                        <option>Techno</option>
+                                        <option>Infinix</option>
                                         <option>Autre</option>
                                     </select>
                                 </FormGroup>
@@ -211,32 +271,43 @@ const Stock = () => {
                                 </FormGroup>
                             </div>
 
-                            <FormGroup label="Images (URLs)">
-                                <div className="flex-column gap-10">
-                                    {newProduct.images.map((url, index) => (
-                                        <div key={index} className="flex-center gap-10">
-                                            <input
-                                                type="text"
-                                                placeholder="Lien de l'image"
-                                                className="form-input"
-                                                style={{ flex: 1 }}
-                                                value={url}
-                                                onChange={(e) => handleImageUrlChange(index, e.target.value)}
-                                            />
-                                            <button type="button" onClick={() => handleRemoveImage(index)} className="btn-icon" style={{ padding: '10px' }}>
-                                                <X size={18} color="var(--danger)" />
-                                            </button>
+                            <FormGroup label="Images du Produit">
+                                <div className="flex-column gap-15">
+                                    <label className="upload-zone">
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            onChange={handleImageUpload}
+                                            style={{ display: 'none' }}
+                                        />
+                                        <Upload size={32} color="var(--primary)" />
+                                        <p style={{ marginTop: '10px', fontWeight: '600' }}>Cliquez pour uploader des images</p>
+                                        <p className="text-secondary" style={{ fontSize: '12px', marginTop: '5px' }}>JPG, PNG, WEBP (Max 5MB par image)</p>
+                                    </label>
+
+                                    {newProduct.images.filter(img => img).length > 0 && (
+                                        <div className="image-preview-grid">
+                                            {newProduct.images.filter(img => img).map((img, index) => (
+                                                <div key={index} className="image-preview-item">
+                                                    <img src={img} alt={`Preview ${index + 1}`} />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveImage(index)}
+                                                        className="remove-image-btn"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                    <button type="button" onClick={handleAddImageUrl} className="text-primary" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '600', width: 'fit-content' }}>
-                                        + Ajouter une autre image
-                                    </button>
+                                    )}
                                 </div>
                             </FormGroup>
 
                             <div style={{ marginTop: '20px', display: 'flex', gap: '15px' }}>
-                                <button type="button" className="btn-primary flex-center gap-10" style={{ flex: 1, padding: '15px' }}>
-                                    <Save size={20} /> Enregistrer le produit
+                                <button type="submit" className="btn-primary flex-center gap-10" style={{ flex: 1, padding: '15px' }}>
+                                    <Save size={20} /> {isEditing ? 'Sauvegarder les modifications' : 'Enregistrer le produit'}
                                 </button>
                                 <button
                                     type="button"
@@ -253,6 +324,16 @@ const Stock = () => {
             )}
 
             <style>{`
+                .stock-layout {
+                    grid-template-columns: minmax(300px, 1fr) 2fr;
+                    align-items: start;
+                }
+                @media (max-width: 1024px) {
+                    .stock-layout {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                
                 .form-input {
                     width: 100%;
                     padding: 12px 15px;
@@ -269,6 +350,56 @@ const Stock = () => {
                 .btn-icon:hover {
                     background-color: rgba(255,255,255,0.05);
                     border-radius: 8px;
+                }
+                .upload-zone {
+                    border: 2px dashed rgba(41, 151, 255, 0.3);
+                    border-radius: 15px;
+                    padding: 40px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: var(--transition);
+                    background: rgba(41, 151, 255, 0.03);
+                }
+                .upload-zone:hover {
+                    border-color: var(--primary);
+                    background: rgba(41, 151, 255, 0.08);
+                }
+                .image-preview-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                    gap: 15px;
+                }
+                .image-preview-item {
+                    position: relative;
+                    aspect-ratio: 1;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    border: 2px solid rgba(255,255,255,0.1);
+                }
+                .image-preview-item img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .remove-image-btn {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    background: rgba(255, 69, 58, 0.9);
+                    border: none;
+                    border-radius: 50%;
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    color: white;
+                    transition: var(--transition);
+                }
+                .remove-image-btn:hover {
+                    background: var(--danger);
+                    transform: scale(1.1);
                 }
             `}</style>
         </div>

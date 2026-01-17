@@ -26,9 +26,9 @@ const Sales = () => {
                 </div>
             </header>
 
-            <div className="grid-3" style={{ gridTemplateColumns: '2fr 1.2fr' }}>
+            <div className="grid-3 sales-layout">
                 {/* Sales List */}
-                <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
+                <div className="glass-card" style={{ padding: '0', overflowX: 'auto' }}>
                     <table className="glass-table">
                         <thead>
                             <tr>
@@ -148,3 +148,25 @@ const Sales = () => {
 };
 
 export default Sales;
+
+const styles = `
+    .sales-layout {
+        grid-template-columns: 2fr 1.2fr;
+    }
+    .receipt-preview {
+        position: sticky;
+        top: 20px;
+    }
+    @media (max-width: 1024px) {
+        .sales-layout {
+            grid-template-columns: 1fr;
+        }
+        .receipt-preview {
+            position: relative;
+            top: 0;
+        }
+    }
+`;
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);

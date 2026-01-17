@@ -108,7 +108,7 @@ const Dashboard = () => {
                 />
             </div>
 
-            <div className="grid-3" style={{ gridTemplateColumns: '2fr 1fr' }}>
+            <div className="grid-3 dashboard-layout">
                 <div className="glass-card flex-column">
                     <div className="flex-between" style={{ marginBottom: '20px' }}>
                         <h3>Performance des Ventes</h3>
@@ -192,3 +192,18 @@ const AlertItem = ({ type, title, desc }) => {
 };
 
 export default Dashboard;
+
+const styles = `
+    .dashboard-layout {
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+    }
+    @media (max-width: 1024px) {
+        .dashboard-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+`;
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);

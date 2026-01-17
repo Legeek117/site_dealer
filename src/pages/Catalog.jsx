@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MOCK_IPHONES } from '../data/mockData';
 import { Search, ChevronRight, Star, Image as ImageIcon, Filter, DollarSign, Smartphone, Zap, Battery } from 'lucide-react';
 
 const Catalog = ({ onSelectProduct }) => {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedBrand, setSelectedBrand] = useState('Tous');
     const [selectedStorage, setSelectedStorage] = useState('Tous');
@@ -26,7 +28,7 @@ const Catalog = ({ onSelectProduct }) => {
         return matchesSearch && matchesBrand && matchesStorage && matchesCondition && matchesBudget;
     });
 
-    const brands = ['Tous', ...new Set(availableStock.map(i => i.brand))];
+    const brands = Array.from(new Set(['Tous', 'Apple', 'Samsung', 'Google', 'Redmi', 'Techno', 'Infinix', ...availableStock.map(i => i.brand)]));
     const storages = ['Tous', '64GB', '128GB', '256GB', '512GB', '1TB'];
     const conditions = ['Tous', 'Scellé', 'Occasion'];
 
@@ -135,7 +137,7 @@ const Catalog = ({ onSelectProduct }) => {
             {/* Advanced Filters */}
             <div ref={productGridRef} className="filters-section slide-up" style={{ marginBottom: '40px' }}>
                 <div className="glass-card" style={{ padding: '25px' }}>
-                    <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr 1fr 1.5fr', alignItems: 'end', gap: '20px' }}>
+                    <div className="grid-responsive-filters" style={{ display: 'grid', gap: '20px', alignItems: 'end' }}>
                         {/* Brand Filter */}
                         <div>
                             <label className="text-secondary" style={{ fontSize: '12px', fontWeight: '600', marginBottom: '8px', display: 'block' }}>MARQUE</label>
@@ -223,7 +225,7 @@ const Catalog = ({ onSelectProduct }) => {
                     <div
                         key={iphone.id}
                         className="glass-card product-card"
-                        onClick={() => onSelectProduct(iphone)}
+                        onClick={() => navigate(`/product/${iphone.id}`)}
                         style={{
                             padding: '0',
                             overflow: 'hidden',
@@ -314,5 +316,25 @@ const Catalog = ({ onSelectProduct }) => {
         </div>
     );
 };
+
+// Add responsive styles directly to the component or ensure they are in index.css
+const styles = `
+    .grid-responsive-filters {
+        grid-template-columns: 1fr 1fr 1fr 1.5fr;
+    }
+    @media (max-width: 1024px) {
+        .grid-responsive-filters {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    @media (max-width: 768px) {
+        .grid-responsive-filters {
+            grid-template-columns: 1fr;
+        }
+    }
+`;
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
 
 export default Catalog;

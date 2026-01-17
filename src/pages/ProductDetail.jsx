@@ -3,9 +3,23 @@ import { Smartphone, Battery, ShieldCheck, ArrowLeft, MessageCircle, Share2, Inf
 import ImageCarousel from '../components/ImageCarousel';
 
 const ProductDetail = ({ product, onBack }) => {
+    const [viewMode, setViewMode] = React.useState('photos'); // 'photos' or '3d'
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    // 3D Model mapping
+    const getSketchfabId = (model) => {
+        const m = model.toLowerCase();
+        if (m.includes('15 pro max')) return '090e561ffd49437ab5185ed9d07903b2';
+        if (m.includes('15 pro')) return '090e561ffd49437ab5185ed9d07903b2';
+        if (m.includes('17 pro')) return 'e88c8489a48b494bb4db178c2907f737';
+        if (m.includes('x') || m.includes('11') || m.includes('12')) return '02f12869e95e4695a15e3a611398742b';
+        return null;
+    };
+
+    const sketchfabId = getSketchfabId(product.model);
 
     if (!product) return null;
 
@@ -36,9 +50,9 @@ const ProductDetail = ({ product, onBack }) => {
                 <ArrowLeft size={20} /> Retour au catalogue
             </button>
 
-            <div className="grid-3" style={{ gridTemplateColumns: 'minmax(300px, 1.5fr) 1fr', gap: '40px' }}>
+            <div className="grid-3 detail-layout">
                 {/* Left: Interactive Media */}
-                <div style={{ position: 'sticky', top: '20px' }}>
+                <div className="sticky-sidebar">
                     <div style={{ marginBottom: '30px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                             <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--primary)', textTransform: 'uppercase' }}>{product.brand}</span>
@@ -49,7 +63,36 @@ const ProductDetail = ({ product, onBack }) => {
                         <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>{product.capacity} • {product.color} • {product.condition}</p>
                     </div>
 
-                    <ImageCarousel images={product.images} />
+                    <div className="flex-center gap-10" style={{ marginBottom: '20px' }}>
+                        <button
+                            onClick={() => setViewMode('photos')}
+                            className={`view-toggle ${viewMode === 'photos' ? 'active' : ''}`}
+                        >
+                            Photos
+                        </button>
+                        {sketchfabId && (
+                            <button
+                                onClick={() => setViewMode('3d')}
+                                className={`view-toggle ${viewMode === '3d' ? 'active' : ''}`}
+                            >
+                                Vue 3D
+                            </button>
+                        )}
+                    </div>
+
+                    {viewMode === 'photos' ? (
+                        <ImageCarousel images={product.images} />
+                    ) : (
+                        <div className="sketchfab-viewer glass-card">
+                            <iframe
+                                title={product.model}
+                                frameBorder="0"
+                                allowFullScreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; xr-spatial-tracking"
+                                src={`https://sketchfab.com/models/${sketchfabId}/embed?autostart=1&transparent=1&ui_infos=0&ui_controls=0&ui_watermark=0&ui_stop=0`}
+                            ></iframe>
+                        </div>
+                    )}
 
                     <div className="glass-card" style={{ marginTop: '30px', padding: '20px', display: 'flex', gap: '15px', alignItems: 'flex-start', borderLeft: '4px solid var(--primary)' }}>
                         <Info color="var(--primary)" size={14} style={{ flexShrink: 0, marginTop: '4px' }} />
@@ -128,6 +171,46 @@ const ProductDetail = ({ product, onBack }) => {
                 @media (max-width: 768px) {
                     .product-detail-page { padding-top: 10px; }
                     .back-btn { margin-bottom: 20px; }
+                    .sketchfab-viewer { height: 350px; }
+                    .detail-layout { grid-template-columns: 1fr !important; gap: 40px; }
+                    .sticky-sidebar { position: relative !important; top: 0 !important; }
+                }
+                .detail-layout {
+                    grid-template-columns: minmax(300px, 1.5fr) 1fr;
+                    gap: 40px;
+                }
+                .sticky-sidebar {
+                    position: sticky;
+                    top: 20px;
+                }
+                .view-toggle {
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    background: rgba(255,255,255,0.05);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    color: white;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: var(--transition);
+                }
+                .view-toggle.active {
+                    background: var(--primary);
+                    border-color: var(--primary);
+                    box-shadow: 0 4px 15px var(--primary-glow);
+                }
+                .sketchfab-viewer {
+                    width: 100%;
+                    height: 500px;
+                    overflow: hidden;
+                    border-radius: 20px;
+                    position: relative;
+                }
+                .sketchfab-viewer iframe {
+                    width: 100%;
+                    height: 140%; /* Crop top/bottom bars */
+                    position: absolute;
+                    top: -20%;
+                    left: 0;
                 }
             `}</style>
         </div>

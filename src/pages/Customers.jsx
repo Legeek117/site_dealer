@@ -23,7 +23,7 @@ const Customers = () => {
                 </button>
             </header>
 
-            <div className="grid-3" style={{ gridTemplateColumns: 'minmax(300px, 1fr) 2fr' }}>
+            <div className="grid-3 customers-layout">
                 {/* Left: Customer List */}
                 <div className="flex-column gap-20">
                     <div className="glass-card" style={{ padding: '15px' }}>
@@ -152,3 +152,18 @@ const Customers = () => {
 };
 
 export default Customers;
+
+const styles = `
+    .customers-layout {
+        grid-template-columns: minmax(300px, 1fr) 2fr;
+        gap: 24px;
+    }
+    @media (max-width: 1024px) {
+        .customers-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+`;
+const styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
