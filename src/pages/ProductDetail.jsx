@@ -10,7 +10,7 @@ const ProductDetail = ({ product, onBack }) => {
     if (!product) return null;
 
     const handleWhatsApp = () => {
-        const text = encodeURIComponent(`Bonjour ! Je suis intéressé par l'${product.model} (${product.capacity}) au prix de ${product.sellingPrice}$. Puis-je avoir plus d'infos ? IMEI: ${product.imei}`);
+        const text = encodeURIComponent(`Bonjour ! Je suis intéressé par l'${product.model} (${product.capacity}) au prix de ${product.sellingPrice.toLocaleString()} CFA. Puis-je avoir plus d'infos ? IMEI: ${product.imei}`);
         window.open(`https://wa.me/+221770000000?text=${text}`, '_blank');
     };
 
@@ -79,7 +79,7 @@ const ProductDetail = ({ product, onBack }) => {
                         <div style={{ marginTop: '40px', paddingTop: '30px', borderTop: '1px solid var(--glass-border)' }}>
                             <div className="flex-between" style={{ marginBottom: '10px' }}>
                                 <span className="text-secondary">Prix de vente</span>
-                                <span style={{ fontSize: '36px', fontWeight: '800', color: 'var(--primary)' }}>{product.sellingPrice}$</span>
+                                <span style={{ fontSize: '32px', fontWeight: '800', color: 'var(--primary)' }}>{product.sellingPrice.toLocaleString()} CFA</span>
                             </div>
                             <p style={{ fontSize: '14px', color: 'var(--success)', fontWeight: '600', marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '5px' }}>
                                 <ChevronRight size={16} /> Disponible immédiatement

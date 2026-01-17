@@ -9,8 +9,8 @@ export const MOCK_IPHONES = [
     batteryLevel: 100,
     faceId: "OK",
     condition: "Scellé",
-    purchasePrice: 1200,
-    sellingPrice: 1500,
+    purchasePrice: 750000,
+    sellingPrice: 950000,
     status: "Disponible",
     createdAt: "2024-01-10T10:00:00Z",
     defects: [],
@@ -30,8 +30,8 @@ export const MOCK_IPHONES = [
     batteryLevel: 88,
     faceId: "OK",
     condition: "Occasion",
-    purchasePrice: 450,
-    sellingPrice: 600,
+    purchasePrice: 280000,
+    sellingPrice: 380000,
     status: "Disponible",
     createdAt: "2024-01-12T14:30:00Z",
     defects: ["rayure_legere_ecran"],
@@ -50,8 +50,8 @@ export const MOCK_IPHONES = [
     batteryLevel: 82,
     faceId: "Defectueux",
     condition: "Occasion",
-    purchasePrice: 280,
-    sellingPrice: 400,
+    purchasePrice: 150000,
+    sellingPrice: 220000,
     status: "Vendu",
     createdAt: "2024-01-05T09:15:00Z",
     defects: ["fissure_arriere"],
@@ -67,10 +67,10 @@ export const MOCK_IPHONES = [
     color: "Phantom Black",
     imei: "357711223344556",
     batteryLevel: 95,
-    faceId: "OK", // Biometrics for Samsung
+    faceId: "OK",
     condition: "Occasion",
-    purchasePrice: 700,
-    sellingPrice: 950,
+    purchasePrice: 450000,
+    sellingPrice: 600000,
     status: "Disponible",
     createdAt: "2024-01-15T11:00:00Z",
     defects: [],
@@ -89,8 +89,8 @@ export const MOCK_IPHONES = [
     batteryLevel: 100,
     faceId: "OK",
     condition: "Scellé",
-    purchasePrice: 200,
-    sellingPrice: 350,
+    purchasePrice: 150000,
+    sellingPrice: 210000,
     status: "Disponible",
     createdAt: "2024-01-16T09:00:00Z",
     defects: [],
@@ -107,16 +107,16 @@ export const MOCK_CUSTOMERS = [
 ];
 
 export const MOCK_SALES = [
-  { id: "s1", customerId: "c1", iphoneId: "3", amount: 400, totalAmount: 400, paidAmount: 400, date: "2024-01-05", paymentType: "Cash", status: "Payé" },
-  { id: "s2", customerId: "c2", iphoneId: "2", amount: 600, totalAmount: 600, paidAmount: 200, date: "2024-01-12", paymentType: "Crédit", status: "Partiel" }
+  { id: "s1", customerId: "c1", iphoneId: "3", amount: 220000, totalAmount: 220000, paidAmount: 220000, date: "2024-01-05", paymentType: "Cash", status: "Payé" },
+  { id: "s2", customerId: "c2", iphoneId: "2", amount: 380000, totalAmount: 380000, paidAmount: 150000, date: "2024-01-12", paymentType: "Crédit", status: "Partiel" }
 ];
 
 export const MOCK_STATS = {
   totalStock: 5,
-  totalSalesMonth: 1000,
-  pendingCredits: 400,
+  totalSalesMonth: 370000,
+  pendingCredits: 230000,
   recentSales: [
-    { date: "05 Jan", amount: 400 },
-    { date: "12 Jan", amount: 200 }
+    { date: "05 Jan", amount: 220000 },
+    { date: "12 Jan", amount: 150000 }
   ]
 };

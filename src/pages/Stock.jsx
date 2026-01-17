@@ -87,7 +87,7 @@ const Stock = () => {
                             >
                                 <div className="flex-between" style={{ marginBottom: '5px' }}>
                                     <h4 style={{ fontSize: '15px', fontWeight: '700' }}>{item.model}</h4>
-                                    <span style={{ fontSize: '11px', color: 'var(--primary)', fontWeight: '800' }}>{item.sellingPrice}$</span>
+                                    <span style={{ fontSize: '11px', color: 'var(--primary)', fontWeight: '800' }}>{item.sellingPrice.toLocaleString()} CFA</span>
                                 </div>
                                 <div className="flex-between">
                                     <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{item.brand} • {item.capacity} • {item.imei.slice(-6)}</p>
@@ -128,10 +128,10 @@ const Stock = () => {
                                         <InfoRow label="Couleur" value={selectedIPhone.color} />
                                     </div>
                                     <div className="flex-column gap-15">
-                                        <InfoRow label="Prix d'achat" value={`${selectedIPhone.purchasePrice}$`} color="var(--danger)" />
-                                        <InfoRow label="Prix de vente" value={`${selectedIPhone.sellingPrice}$`} color="var(--success)" weight="800" />
+                                        <InfoRow label="Prix d'achat" value={`${selectedIPhone.purchasePrice.toLocaleString()} CFA`} color="var(--danger)" />
+                                        <InfoRow label="Prix de vente" value={`${selectedIPhone.sellingPrice.toLocaleString()} CFA`} color="var(--success)" weight="800" />
                                         <InfoRow label="Date d'entrée" value={new Date(selectedIPhone.createdAt).toLocaleDateString()} />
-                                        <InfoRow label="Marge brute" value={`${selectedIPhone.sellingPrice - selectedIPhone.purchasePrice}$`} />
+                                        <InfoRow label="Marge brute" value={`${(selectedIPhone.sellingPrice - selectedIPhone.purchasePrice).toLocaleString()} CFA`} />
                                     </div>
                                 </div>
 
@@ -203,10 +203,10 @@ const Stock = () => {
                             </FormGroup>
 
                             <div className="grid-3" style={{ gridTemplateColumns: '1fr 1fr' }}>
-                                <FormGroup label="Prix d'achat ($)">
+                                <FormGroup label="Prix d'achat (CFA)">
                                     <input type="number" className="form-input" value={newProduct.purchasePrice} onChange={(e) => setNewProduct({ ...newProduct, purchasePrice: e.target.value })} />
                                 </FormGroup>
-                                <FormGroup label="Prix de vente ($)">
+                                <FormGroup label="Prix de vente (CFA)">
                                     <input type="number" className="form-input" value={newProduct.sellingPrice} onChange={(e) => setNewProduct({ ...newProduct, sellingPrice: e.target.value })} />
                                 </FormGroup>
                             </div>

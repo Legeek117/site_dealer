@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { MOCK_IPHONES } from '../data/mockData';
-import { Search, ChevronRight, Star, Image as ImageIcon, Filter, DollarSign, Smartphone, Zap } from 'lucide-react';
+import { Search, ChevronRight, Star, Image as ImageIcon, Filter, DollarSign, Smartphone, Zap, Battery } from 'lucide-react';
 
 const Catalog = ({ onSelectProduct }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedBrand, setSelectedBrand] = useState('Tous');
     const [selectedStorage, setSelectedStorage] = useState('Tous');
     const [selectedCondition, setSelectedCondition] = useState('Tous');
-    const [budget, setBudget] = useState(2000); // Default high budget
+    const [budget, setBudget] = useState(2000000); // Default high budget in CFA
     const [isBudgetMode, setIsBudgetMode] = useState(false);
 
     const productGridRef = useRef(null);
@@ -69,7 +69,7 @@ const Catalog = ({ onSelectProduct }) => {
                             className="glass-card"
                             style={{ padding: '16px 32px', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
                         >
-                            <DollarSign size={20} /> Quel est votre budget ?
+                            <span style={{ fontWeight: '800', fontSize: '20px' }}>CFA</span> Quel est votre budget ?
                         </button>
                     </div>
                 </div>
@@ -89,23 +89,37 @@ const Catalog = ({ onSelectProduct }) => {
                                 <h2 style={{ marginBottom: '5px' }}>Assistant Budget</h2>
                                 <p className="text-secondary">Glissez pour définir votre budget maximum</p>
                             </div>
-                            <button onClick={() => { setIsBudgetMode(false); setBudget(2000); }} className="text-secondary" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Annuler</button>
+                            <button onClick={() => { setIsBudgetMode(false); setBudget(2000000); }} className="text-secondary" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Annuler</button>
                         </div>
 
                         <div style={{ textAlign: 'center', padding: '20px 0' }}>
-                            <span style={{ fontSize: '48px', fontWeight: '800', color: 'var(--primary)' }}>{budget}$</span>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
+                                <input
+                                    type="text"
+                                    inputMode="numeric"
+                                    value={budget === 0 ? '' : budget.toLocaleString()}
+                                    placeholder="0"
+                                    onChange={(e) => {
+                                        const rawValue = e.target.value.replace(/[^0-9]/g, '');
+                                        const numValue = rawValue === '' ? 0 : parseInt(rawValue);
+                                        setBudget(numValue);
+                                    }}
+                                    className="budget-manual-input"
+                                />
+                                <span style={{ fontSize: '48px', fontWeight: '800', color: 'var(--primary)' }}>CFA</span>
+                            </div>
                             <input
                                 type="range"
-                                min="100"
-                                max="2000"
-                                step="50"
-                                value={budget}
+                                min="50000"
+                                max="2000000"
+                                step="10000"
+                                value={budget > 2000000 ? 2000000 : budget}
                                 onChange={(e) => setBudget(parseInt(e.target.value))}
                                 className="budget-slider"
                             />
                             <div className="flex-between text-secondary" style={{ fontSize: '14px', marginTop: '10px' }}>
-                                <span>100$</span>
-                                <span>2000$</span>
+                                <span>50 000 CFA</span>
+                                <span>2 000 000 CFA</span>
                             </div>
                         </div>
 
@@ -171,7 +185,7 @@ const Catalog = ({ onSelectProduct }) => {
                         </div>
                     </div>
 
-                    {(selectedBrand !== 'Tous' || selectedStorage !== 'Tous' || selectedCondition !== 'Tous' || searchTerm || budget < 2000) && (
+                    {(selectedBrand !== 'Tous' || selectedStorage !== 'Tous' || selectedCondition !== 'Tous' || searchTerm || budget < 2000000) && (
                         <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
                             <button
                                 onClick={() => {
@@ -179,7 +193,7 @@ const Catalog = ({ onSelectProduct }) => {
                                     setSelectedStorage('Tous');
                                     setSelectedCondition('Tous');
                                     setSearchTerm('');
-                                    setBudget(2000);
+                                    setBudget(2000000);
                                 }}
                                 style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontSize: '13px', fontWeight: '600' }}
                             >
@@ -254,7 +268,7 @@ const Catalog = ({ onSelectProduct }) => {
                         <div style={{ padding: '25px' }}>
                             <div className="flex-between" style={{ marginBottom: '8px' }}>
                                 <h3 style={{ fontSize: '20px', fontWeight: '700' }}>{iphone.model}</h3>
-                                <span style={{ fontWeight: '800', fontSize: '20px', color: 'var(--primary)' }}>{iphone.sellingPrice}$</span>
+                                <span style={{ fontWeight: '800', fontSize: '16px', color: 'var(--primary)' }}>{iphone.sellingPrice.toLocaleString()} CFA</span>
                             </div>
                             <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '20px' }}>{iphone.color} • {iphone.condition}</p>
 
@@ -287,7 +301,7 @@ const Catalog = ({ onSelectProduct }) => {
                                 setSelectedStorage('Tous');
                                 setSelectedCondition('Tous');
                                 setSearchTerm('');
-                                setBudget(2000);
+                                setBudget(2000000);
                             }}
                             className="btn-primary"
                             style={{ marginTop: '20px' }}

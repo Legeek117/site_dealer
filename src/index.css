@@ -478,6 +478,25 @@ h3 {
   margin: 20px 0;
 }
 
+.budget-manual-input {
+  background: none;
+  border: none;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary);
+  text-align: right;
+  width: 250px;
+  outline: none;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  .budget-manual-input {
+    font-size: 32px;
+    width: 180px;
+  }
+}
+
 .budget-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;

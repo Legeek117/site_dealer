@@ -7,7 +7,7 @@ const Settings = () => {
         { icon: Bell, label: 'Notifications', desc: 'Préférences d\'alertes et emails' },
         { icon: Lock, label: 'Sécurité', desc: 'Mot de passe et 2FA' },
         { icon: Palette, label: 'Apparence', desc: 'Thèmes et affichage' },
-        { icon: Globe, label: 'Langue & Région', desc: 'Français (FR) • USD ($)' },
+        { icon: Globe, label: 'Langue & Région', desc: 'Français (FR) • CFA' },
     ];
 
     return (

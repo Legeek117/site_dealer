@@ -30,7 +30,7 @@ const Dashboard = () => {
         labels: MOCK_STATS.recentSales.map(s => s.date),
         datasets: [
             {
-                label: 'Ventes ($)',
+                label: 'Ventes (CFA)',
                 data: MOCK_STATS.recentSales.map(s => s.amount),
                 fill: true,
                 borderColor: '#2997ff',
@@ -95,14 +95,14 @@ const Dashboard = () => {
                 <StatCard
                     icon={<TrendingUp color="var(--success)" size={24} />}
                     label="Chiffre d'affaires"
-                    value={`${MOCK_STATS.totalSalesMonth} FCFA`}
+                    value={`${MOCK_STATS.totalSalesMonth.toLocaleString()} CFA`}
                     trend="+12% vs N-1"
                     trendColor="var(--success)"
                 />
                 <StatCard
                     icon={<CreditCard color="var(--warning)" size={24} />}
                     label="Crédits en cours"
-                    value={`${MOCK_STATS.pendingCredits} FCFA`}
+                    value={`${MOCK_STATS.pendingCredits.toLocaleString()} CFA`}
                     trend="2 échéances proches"
                     trendColor="var(--warning)"
                 />

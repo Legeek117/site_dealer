@@ -51,7 +51,7 @@ const Sales = () => {
                                         <td>{new Date(sale.date).toLocaleDateString()}</td>
                                         <td style={{ fontWeight: '500' }}>{customer?.name}</td>
                                         <td>{iphone?.model}</td>
-                                        <td style={{ fontWeight: '700' }}>{sale.totalAmount}$</td>
+                                        <td style={{ fontWeight: '700' }}>{sale.totalAmount.toLocaleString()} CFA</td>
                                         <td>
                                             <span className={`status-badge ${isPaid ? 'status-available' : 'status-reparation'}`}>
                                                 {sale.status}
@@ -104,16 +104,16 @@ const Sales = () => {
                                 <div style={{ marginTop: '20px', borderTop: '2px dashed var(--glass-border)', paddingTop: '20px' }}>
                                     <div className="flex-between" style={{ marginBottom: '10px' }}>
                                         <span>Montant Total</span>
-                                        <span style={{ fontWeight: '700' }}>{selectedSale.totalAmount}$</span>
+                                        <span style={{ fontWeight: '700' }}>{selectedSale.totalAmount.toLocaleString()} CFA</span>
                                     </div>
                                     <div className="flex-between" style={{ marginBottom: '10px', color: 'var(--success)' }}>
                                         <span>Montant Payé</span>
-                                        <span style={{ fontWeight: '600' }}>-{selectedSale.paidAmount}$</span>
+                                        <span style={{ fontWeight: '600' }}>-{selectedSale.paidAmount.toLocaleString()} CFA</span>
                                     </div>
                                     {selectedSale.remainingAmount > 0 && (
                                         <div className="flex-between" style={{ color: 'var(--danger)', fontSize: '18px', fontWeight: '800' }}>
                                             <span>Reste à payer</span>
-                                            <span>{selectedSale.remainingAmount}$</span>
+                                            <span>{(selectedSale.totalAmount - selectedSale.paidAmount).toLocaleString()} CFA</span>
                                         </div>
                                     )}
                                 </div>
