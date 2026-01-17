@@ -36,12 +36,14 @@ class GlobalErrorBoundary extends React.Component {
   }
 }
 
-function AdminLayout({ children, activeTab, setActiveTab }) {
+function AdminLayout({ children, activeTab, setActiveTab, onLogout }) {
   return (
     <div className="admin-container">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={onLogout} />
       <main className="main-content">
-        {children}
+        <div key={activeTab} className="page-content">
+          {children}
+        </div>
       </main>
     </div>
   );
@@ -52,44 +54,52 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = () => setIsAuthenticated(true);
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setActiveTab('dashboard'); // Reset tab
+  };
 
   return (
     <Router>
       <GlobalErrorBoundary>
         <div className="app-container">
-          <Navbar />
           <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog" element={
-              <div className="page-container">
-                <Catalog onSelectProduct={(p) => window.location.href = `/product/${p.id}`} />
-              </div>
+            {/* Public Routes - With Navbar */}
+            <Route path="*" element={
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/catalog" element={
+                    <div className="page-container">
+                      <Catalog />
+                    </div>
+                  } />
+                  <Route path="/product/:id" element={
+                    <div className="page-container">
+                      <ProductDetailWrapper />
+                    </div>
+                  } />
+                  {/* Admin Route - Without Navbar */}
+                  <Route path="/admin" element={
+                    !isAuthenticated ? (
+                      <Login onLogin={handleLogin} />
+                    ) : (
+                      <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout}>
+                        {activeTab === 'dashboard' && <Dashboard />}
+                        {activeTab === 'stock' && <Stock />}
+                        {activeTab === 'sales' && <Sales />}
+                        {activeTab === 'customers' && <Customers />}
+                        {activeTab === 'warranty' && <Warranty />}
+                        {activeTab === 'settings' && <Settings />}
+                      </AdminLayout>
+                    )
+                  } />
+                  {/* Fallback */}
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </>
             } />
-            <Route path="/product/:id" element={
-              <div className="page-container">
-                <ProductDetailWrapper />
-              </div>
-            } />
-
-            {/* Admin Routes */}
-            <Route path="/admin" element={
-              !isAuthenticated ? (
-                <Login onLogin={handleLogin} />
-              ) : (
-                <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-                  {activeTab === 'dashboard' && <Dashboard />}
-                  {activeTab === 'stock' && <Stock />}
-                  {activeTab === 'sales' && <Sales />}
-                  {activeTab === 'customers' && <Customers />}
-                  {activeTab === 'warranty' && <Warranty />}
-                  {activeTab === 'settings' && <Settings />}
-                </AdminLayout>
-              )
-            } />
-
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </GlobalErrorBoundary>

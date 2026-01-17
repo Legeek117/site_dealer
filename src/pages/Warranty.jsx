@@ -9,6 +9,11 @@ const Warranty = () => {
         { id: 'cl2', saleId: 's2', issue: 'Écran scintille', status: 'Résolu', date: '2024-01-18' }
     ];
 
+    // Lookups for performance
+    const salesMap = React.useMemo(() => MOCK_SALES.reduce((acc, s) => ({ ...acc, [s.id]: s }), {}), []);
+    const iphonesMap = React.useMemo(() => MOCK_IPHONES.reduce((acc, i) => ({ ...acc, [i.id]: i }), {}), []);
+    const customersMap = React.useMemo(() => MOCK_CUSTOMERS.reduce((acc, c) => ({ ...acc, [c.id]: c }), {}), []);
+
     return (
         <div className="page-content">
             <header className="page-header">
@@ -44,42 +49,47 @@ const Warranty = () => {
 
                 <div>
                     {claims.map((claim) => {
-                        const sale = MOCK_SALES.find(s => s.id === claim.saleId);
-                        const iphone = MOCK_IPHONES.find(i => i.id === sale?.iphoneId);
-                        const customer = MOCK_CUSTOMERS.find(c => c.id === sale?.customerId);
+                        const sale = salesMap[claim.saleId];
+                        const iphone = iphonesMap[sale?.iphoneId];
+                        const customer = customersMap[sale?.customerId];
                         const isResolved = claim.status === 'Résolu';
 
                         return (
-                            <div key={claim.id} className="flex-between" style={{ padding: '20px', borderBottom: '1px solid var(--glass-border)', transition: 'background-color 0.2s' }}>
+                            <div key={claim.id} className="flex-between" style={{ padding: '25px', borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background-color 0.2s' }}>
                                 <div className="flex-center gap-20">
                                     <div className="flex-center" style={{
-                                        width: '48px',
-                                        height: '48px',
-                                        borderRadius: '12px',
-                                        backgroundColor: isResolved ? 'rgba(48, 209, 88, 0.1)' : 'rgba(255, 159, 10, 0.1)',
-                                        color: isResolved ? 'var(--success)' : 'var(--warning)'
+                                        width: '54px',
+                                        height: '54px',
+                                        borderRadius: '16px',
+                                        backgroundColor: isResolved ? 'rgba(52, 199, 89, 0.1)' : 'rgba(255, 159, 10, 0.1)',
+                                        color: isResolved ? 'var(--success)' : 'var(--warning)',
+                                        border: `1px solid ${isResolved ? 'rgba(52, 199, 89, 0.05)' : 'rgba(255, 159, 10, 0.05)'}`
                                     }}>
-                                        {isResolved ? <CheckCircle2 /> : <Clock />}
+                                        {isResolved ? <CheckCircle2 size={24} /> : <Clock size={24} />}
                                     </div>
 
                                     <div>
-                                        <div className="flex-center gap-10" style={{ marginBottom: '4px', justifyContent: 'flex-start' }}>
-                                            <h4 style={{ fontWeight: '600', fontSize: '16px' }}>{iphone?.model}</h4>
+                                        <div className="flex-center gap-10" style={{ marginBottom: '6px', justifyContent: 'flex-start' }}>
+                                            <h4 style={{ fontWeight: '700', fontSize: '17px' }}>{iphone?.model || 'Modèle Inconnu'}</h4>
                                             <span className="text-secondary">•</span>
-                                            <span className="text-secondary" style={{ fontSize: '14px' }}>{customer?.name}</span>
+                                            <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--primary)' }}>{customer?.name}</span>
                                         </div>
 
-                                        <p style={{ fontSize: '14px', color: 'var(--text-main)', marginBottom: '6px' }}>{claim.issue}</p>
+                                        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', marginBottom: '8px', lineHeight: '1.4' }}>{claim.issue}</p>
 
                                         <div className="flex-center gap-15" style={{ justifyContent: 'flex-start' }}>
-                                            <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{claim.date}</span>
-                                            <span style={{ fontSize: '12px', color: 'var(--primary)', cursor: 'pointer', fontWeight: '500' }}>Voir dossier</span>
+                                            <div className="flex-center gap-5" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                    <Clock size={12} /> {claim.date}
+                                                </div>
+                                            </div>
+                                            <span style={{ fontSize: '12px', color: 'var(--primary)', cursor: 'pointer', fontWeight: '600', textDecoration: 'underline' }}>Ouvrir le dossier</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div>
-                                    <span className={`status-badge ${isResolved ? 'status-available' : 'status-reparation'}`}>
+                                <div style={{ textAlign: 'right' }}>
+                                    <span className={`status-badge ${isResolved ? 'status-available' : 'status-reparation'}`} style={{ padding: '8px 16px' }}>
                                         {claim.status}
                                     </span>
                                 </div>

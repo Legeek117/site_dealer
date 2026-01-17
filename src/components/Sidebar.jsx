@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayoutDashboard, Smartphone, Users, ShoppingBag, ShieldAlert, Settings, LogOut } from 'lucide-react';
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, onLogout }) => {
     const menuItems = [
         { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
         { id: 'stock', label: 'Gestion Stock', icon: Smartphone },
@@ -34,7 +34,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             </nav>
 
             <div className="nav-footer">
-                <div className="nav-item logout">
+                <div className="nav-item logout" onClick={onLogout}>
                     <LogOut size={20} />
                     <span>Déconnexion</span>
                 </div>

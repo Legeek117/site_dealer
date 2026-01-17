@@ -56,12 +56,17 @@ const Stock = () => {
         setIsAddModalOpen(true);
     };
 
-    const handleDeleteProduct = () => {
-        if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'${selectedIPhone.model} ?`)) {
-            // In a real app, this would delete from the backend
-            alert('Produit supprimé (Simulation)');
-            setSelectedIPhone(null);
-        }
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+    const handleDeleteClick = () => {
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        // In a real app, this would delete from the backend
+        alert('Produit supprimé (Simulation)');
+        setSelectedIPhone(null);
+        setIsDeleteModalOpen(false);
     };
 
     const handleSaveProduct = (e) => {
@@ -168,7 +173,7 @@ const Stock = () => {
                                             <Edit size={16} /> Modifier
                                         </button>
                                         <button
-                                            onClick={handleDeleteProduct}
+                                            onClick={handleDeleteClick}
                                             className="text-danger flex-center gap-5"
                                             style={{ background: 'none', border: 'none', cursor: 'pointer', fontWeight: '600' }}
                                         >
@@ -211,36 +216,67 @@ const Stock = () => {
                 </div>
             </div>
 
+            {/* Delete Confirmation Modal */}
+            {isDeleteModalOpen && (
+                <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                    <div className="glass-card slide-up" style={{ width: '100%', maxWidth: '400px', padding: '40px', textAlign: 'center' }}>
+                        <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(255,59,48,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                            <Trash2 size={32} color="var(--danger)" />
+                        </div>
+                        <h2 style={{ marginBottom: '10px' }}>Supprimer l'appareil ?</h2>
+                        <p className="text-secondary" style={{ marginBottom: '30px', fontSize: '14px', lineHeight: '1.6' }}>
+                            Cette action est irréversible. L'appareil <strong>{selectedIPhone?.model}</strong> sera définitivement retiré du stock.
+                        </p>
+                        <div style={{ display: 'flex', gap: '15px' }}>
+                            <button
+                                onClick={confirmDelete}
+                                className="btn-primary"
+                                style={{ flex: 1, backgroundColor: 'var(--danger)', boxShadow: '0 4px 15px rgba(255,59,48,0.3)' }}
+                            >
+                                Supprimer
+                            </button>
+                            <button
+                                onClick={() => setIsDeleteModalOpen(false)}
+                                className="glass-card"
+                                style={{ flex: 1, cursor: 'pointer' }}
+                            >
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Add Product Modal */}
             {isAddModalOpen && (
                 <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-                    <div className="glass-card slide-up" style={{ width: '100%', maxWidth: '800px', maxHeight: '90vh', overflowY: 'auto', padding: '40px' }}>
-                        <div className="flex-between" style={{ marginBottom: '30px' }}>
-                            <h2>{isEditing ? 'Modifier le Produit' : 'Ajouter un Nouveau Produit'}</h2>
-                            <button onClick={() => setIsAddModalOpen(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
-                                <X size={24} />
+                    <div className="glass-card slide-up" style={{ width: '100%', maxWidth: '800px', maxHeight: '95vh', overflowY: 'auto', padding: '40px' }}>
+                        <div className="flex-between" style={{ marginBottom: '40px', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '20px' }}>
+                            <h2 style={{ fontSize: '24px' }}>{isEditing ? 'Modifier l\'appareil' : 'Ajouter au Stock'}</h2>
+                            <button onClick={() => setIsAddModalOpen(false)} style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: 'white', cursor: 'pointer', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <X size={20} />
                             </button>
                         </div>
 
-                        <form className="flex-column gap-20" onSubmit={handleSaveProduct}>
-                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+                        <form className="flex-column gap-25" onSubmit={handleSaveProduct}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                                 <FormGroup label="Marque">
                                     <select value={newProduct.brand} onChange={(e) => setNewProduct({ ...newProduct, brand: e.target.value })} className="form-input">
                                         <option>Apple</option>
                                         <option>Samsung</option>
                                         <option>Google</option>
-                                        <option>Redmi</option>
+                                        <option>Xiaomi / Redmi</option>
                                         <option>Techno</option>
                                         <option>Infinix</option>
                                         <option>Autre</option>
                                     </select>
                                 </FormGroup>
                                 <FormGroup label="Modèle">
-                                    <input type="text" placeholder="ex: iPhone 15 Pro" className="form-input" value={newProduct.model} onChange={(e) => setNewProduct({ ...newProduct, model: e.target.value })} />
+                                    <input type="text" placeholder="ex: iPhone 15 Pro Max" className="form-input" value={newProduct.model} onChange={(e) => setNewProduct({ ...newProduct, model: e.target.value })} required />
                                 </FormGroup>
                             </div>
 
-                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '20px' }}>
                                 <FormGroup label="Capacité">
                                     <select className="form-input" value={newProduct.capacity} onChange={(e) => setNewProduct({ ...newProduct, capacity: e.target.value })}>
                                         <option>64GB</option>
@@ -251,28 +287,28 @@ const Stock = () => {
                                     </select>
                                 </FormGroup>
                                 <FormGroup label="Couleur">
-                                    <input type="text" placeholder="Noir, Titane..." className="form-input" value={newProduct.color} onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })} />
+                                    <input type="text" placeholder="ex: Titane Naturel" className="form-input" value={newProduct.color} onChange={(e) => setNewProduct({ ...newProduct, color: e.target.value })} />
                                 </FormGroup>
                                 <FormGroup label="Batterie (%)">
-                                    <input type="number" className="form-input" value={newProduct.batteryLevel} onChange={(e) => setNewProduct({ ...newProduct, batteryLevel: e.target.value })} />
+                                    <input type="number" min="0" max="100" className="form-input" value={newProduct.batteryLevel} onChange={(e) => setNewProduct({ ...newProduct, batteryLevel: e.target.value })} />
                                 </FormGroup>
                             </div>
 
-                            <FormGroup label="IMEI">
-                                <input type="text" placeholder="Numéro IMEI" className="form-input" value={newProduct.imei} onChange={(e) => setNewProduct({ ...newProduct, imei: e.target.value })} />
+                            <FormGroup label="Identifiant IMEI">
+                                <input type="text" placeholder="Entrez le numéro IMEI" className="form-input" value={newProduct.imei} onChange={(e) => setNewProduct({ ...newProduct, imei: e.target.value })} required />
                             </FormGroup>
 
-                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+                            <div className="grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                                 <FormGroup label="Prix d'achat (CFA)">
-                                    <input type="number" className="form-input" value={newProduct.purchasePrice} onChange={(e) => setNewProduct({ ...newProduct, purchasePrice: e.target.value })} />
+                                    <input type="number" placeholder="0" className="form-input" value={newProduct.purchasePrice} onChange={(e) => setNewProduct({ ...newProduct, purchasePrice: e.target.value })} required />
                                 </FormGroup>
                                 <FormGroup label="Prix de vente (CFA)">
-                                    <input type="number" className="form-input" value={newProduct.sellingPrice} onChange={(e) => setNewProduct({ ...newProduct, sellingPrice: e.target.value })} />
+                                    <input type="number" placeholder="0" className="form-input" value={newProduct.sellingPrice} onChange={(e) => setNewProduct({ ...newProduct, sellingPrice: e.target.value })} required />
                                 </FormGroup>
                             </div>
 
-                            <FormGroup label="Images du Produit">
-                                <div className="flex-column gap-15">
+                            <FormGroup label="Photos de l'appareil">
+                                <div className="flex-column gap-20">
                                     <label className="upload-zone">
                                         <input
                                             type="file"
@@ -281,16 +317,18 @@ const Stock = () => {
                                             onChange={handleImageUpload}
                                             style={{ display: 'none' }}
                                         />
-                                        <Upload size={32} color="var(--primary)" />
-                                        <p style={{ marginTop: '10px', fontWeight: '600' }}>Cliquez pour uploader des images</p>
-                                        <p className="text-secondary" style={{ fontSize: '12px', marginTop: '5px' }}>JPG, PNG, WEBP (Max 5MB par image)</p>
+                                        <div style={{ backgroundColor: 'rgba(0,113,227,0.1)', width: '60px', height: '60px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px' }}>
+                                            <Upload size={28} color="var(--primary)" />
+                                        </div>
+                                        <p style={{ fontWeight: '700', fontSize: '15px' }}>Ajouter des photos</p>
+                                        <p className="text-secondary" style={{ fontSize: '12px', marginTop: '5px' }}>Faites glisser vos images ou cliquez ici</p>
                                     </label>
 
                                     {newProduct.images.filter(img => img).length > 0 && (
                                         <div className="image-preview-grid">
                                             {newProduct.images.filter(img => img).map((img, index) => (
-                                                <div key={index} className="image-preview-item">
-                                                    <img src={img} alt={`Preview ${index + 1}`} />
+                                                <div key={index} className="image-preview-item fade-in">
+                                                    <img src={img} alt={`Aperçu ${index + 1}`} />
                                                     <button
                                                         type="button"
                                                         onClick={() => handleRemoveImage(index)}
@@ -306,16 +344,16 @@ const Stock = () => {
                             </FormGroup>
 
                             <div style={{ marginTop: '20px', display: 'flex', gap: '15px' }}>
-                                <button type="submit" className="btn-primary flex-center gap-10" style={{ flex: 1, padding: '15px' }}>
-                                    <Save size={20} /> {isEditing ? 'Sauvegarder les modifications' : 'Enregistrer le produit'}
+                                <button type="submit" className="btn-primary flex-center gap-10" style={{ flex: 1.5, padding: '18px' }}>
+                                    <Save size={20} /> {isEditing ? 'Valider les modifications' : 'Ajouter au Stock'}
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setIsAddModalOpen(false)}
                                     className="glass-card"
-                                    style={{ flex: 1, padding: '15px', cursor: 'pointer' }}
+                                    style={{ flex: 1, padding: '18px', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.1)' }}
                                 >
-                                    Fermer
+                                    Annuler
                                 </button>
                             </div>
                         </form>

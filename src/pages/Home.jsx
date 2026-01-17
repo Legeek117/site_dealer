@@ -70,7 +70,7 @@ const Home = () => {
                             <iframe
                                 title="iPhone 15 Pro Max"
                                 frameBorder="0"
-                                allowFullScreen
+                                allowFullScreen loading="lazy"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; xr-spatial-tracking"
                                 src="https://sketchfab.com/models/090e561ffd49437ab5185ed9d07903b2/embed?autostart=1&autospin=0.1&transparent=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0"
                             ></iframe>

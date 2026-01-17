@@ -250,9 +250,9 @@ const Catalog = () => {
                                     className="product-image"
                                 />
                             ) : (
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'var(--text-secondary)' }}>
-                                    <ImageIcon size={48} style={{ marginBottom: '10px', opacity: 0.5 }} />
-                                    <span>Pas d'image</span>
+                                <div className="flex-center flex-column" style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, rgba(41, 151, 255, 0.03), rgba(0,0,0,0.4))', color: 'var(--text-secondary)' }}>
+                                    <Smartphone size={64} style={{ marginBottom: '15px', opacity: 0.1 }} strokeWidth={1} />
+                                    <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase', opacity: 0.4 }}>Visuel Non Disponible</span>
                                 </div>
                             )}
 
