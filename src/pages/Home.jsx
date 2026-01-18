@@ -95,7 +95,7 @@ const Home = () => {
                             allow="autoplay; fullscreen; xr-spatial-tracking"
                             style={{ opacity: isShowcaseLoaded ? 1 : 0, transition: 'opacity 1s ease' }}
                             onLoad={() => setIsShowcaseLoaded(true)}
-                            src="https://sketchfab.com/models/fd64970de2b148b9a69de9aa1e9381c1/embed?autospin=0.5&autostart=0&transparent=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0"
+                            src="https://sketchfab.com/models/fd64970de2b148b9a69de9aa1e9381c1/embed?autospin=0.5&autostart=1&transparent=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0"
                         ></iframe>
                     </div>
                 </div>
