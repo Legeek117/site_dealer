@@ -151,7 +151,7 @@ const Stock = () => {
                 <div className="flex-column gap-20">
                     {selectedIPhone ? (
                         <>
-                            <div style={{ height: '400px' }}>
+                            <div style={{ marginBottom: '20px' }}>
                                 <ImageCarousel images={selectedIPhone.images} />
                             </div>
 

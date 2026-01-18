@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Star, ShieldCheck, Zap, Smartphone, ArrowRight } from 'lucide-react';
 
 const Home = () => {
+    const [isHeroLoaded, setIsHeroLoaded] = React.useState(false);
+    const [isShowcaseLoaded, setIsShowcaseLoaded] = React.useState(false);
+
     return (
         <div className="home-container">
             {/* Hero Section with 3D */}
@@ -15,26 +18,35 @@ const Home = () => {
                         Découvrez la <span className="text-gradient">Perfection</span> Mobile.
                     </h1>
                     <p className="hero-subtitle">
-                        Le leader de la vente de smartphones premium reconditionnés et neufs.
-                        Qualité certifiée, prix imbattables et garantie DealerPro.
+                        Vente de smartphones premium reconditionnés et neufs. Qualité certifiée et garantie.
                     </p>
                     <div className="hero-btns">
                         <Link to="/catalog" className="btn-primary-large">
                             Explorer le Stock <ArrowRight size={20} />
                         </Link>
-                        <button onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })} className="btn-secondary-large">
-                            En savoir plus
-                        </button>
+                        <Link to="/budget" className="btn-secondary-large">
+                            💸 Assistant Budget
+                        </Link>
                     </div>
                 </div>
 
                 <div className="hero-visual">
                     <div className="sketchfab-embed-wrapper-hero">
+                        {/* Placeholder / Loading State */}
+                        <div className={`hero-placeholder ${isHeroLoaded ? 'fade-out' : ''}`}>
+                            <div className="placeholder-content">
+                                <div className="loading-spinner"></div>
+                                <span className="loading-text">Chargement 3D...</span>
+                            </div>
+                        </div>
+
                         <iframe
                             title="iPhone 17 Pro"
                             frameBorder="0"
                             allowFullScreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; xr-spatial-tracking"
+                            style={{ opacity: isHeroLoaded ? 1 : 0, transition: 'opacity 1s ease' }}
+                            onLoad={() => setIsHeroLoaded(true)}
                             src="https://sketchfab.com/models/e88c8489a48b494bb4db178c2907f737/embed?autostart=1&autospin=0.2&transparent=1&ui_hint=0&ui_infos=0&ui_controls=0&ui_watermark=0&ui_stop=0"
                         ></iframe>
                     </div>
@@ -63,19 +75,33 @@ const Home = () => {
             </section>
 
             {/* Secondary 3D Showcase */}
-            <section className="showcase-section">
-                <div className="container flex-center mobile-column">
-                    <div className="showcase-visual">
-                        <div className="sketchfab-embed-wrapper-small">
-                            <iframe
-                                title="iPhone 15 Pro Max"
-                                frameBorder="0"
-                                allowFullScreen loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; xr-spatial-tracking"
-                                src="https://sketchfab.com/models/090e561ffd49437ab5185ed9d07903b2/embed?autostart=1&autospin=0.1&transparent=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0"
-                            ></iframe>
+            <section className="showcase-section" style={{ position: 'relative', overflow: 'hidden' }}>
+                {/* 3D Background */}
+                <div className="showcase-visual-bg">
+                    <div className="sketchfab-embed-wrapper-small">
+                        {/* Placeholder for showcase */}
+                        <div className={`showcase-placeholder ${isShowcaseLoaded ? 'fade-out' : ''}`}>
+                            <div className="placeholder-content">
+                                <div className="loading-spinner"></div>
+                                <span className="loading-text">Chargement 3D...</span>
+                            </div>
                         </div>
+
+                        <iframe
+                            title="Apple iPhone 15 Pro and Pro Max all colors"
+                            frameBorder="0"
+                            allowFullScreen
+                            loading="lazy"
+                            allow="autoplay; fullscreen; xr-spatial-tracking"
+                            style={{ opacity: isShowcaseLoaded ? 1 : 0, transition: 'opacity 1s ease' }}
+                            onLoad={() => setIsShowcaseLoaded(true)}
+                            src="https://sketchfab.com/models/fd64970de2b148b9a69de9aa1e9381c1/embed?autospin=0.5&autostart=1&transparent=1&ui_controls=0&ui_infos=0&ui_watermark=0&ui_stop=0"
+                        ></iframe>
                     </div>
+                </div>
+
+                {/* Text Content (on top) */}
+                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
                     <div className="showcase-text text-center">
                         <h2 className="home-showcase-title" style={{ fontSize: '56px', marginBottom: '20px', lineHeight: '1.1' }}>Le choix sans compromis.</h2>
                         <p className="text-secondary home-showcase-subtitle" style={{ marginBottom: '30px', fontSize: '20px' }}>
@@ -206,8 +232,8 @@ const Home = () => {
                 }
                 .sketchfab-embed-wrapper-small {
                     width: 100%;
-                    max-width: 500px;
-                    height: 500px;
+                    max-width: 1200px;
+                    height: 700px;
                     overflow: hidden;
                     position: relative;
                     border-radius: 30px;
@@ -218,7 +244,7 @@ const Home = () => {
                     position: absolute;
                     top: -20%;
                     left: 0;
-                    pointer-events: none; /* Disables interaction for cleaner look */
+                    pointer-events: none;
                 }
                 .badge-premium {
                     display: inline-flex;
@@ -242,8 +268,25 @@ const Home = () => {
                     margin: 0 auto;
                     padding: 0 20px;
                 }
+                .showcase-visual-bg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 0;
+                    opacity: 0.5;
+                    pointer-events: none;
+                }
                 .showcase-section {
                     padding: 120px 0;
+                    min-height: 80vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
                 .spec-list {
                     display: flex;
@@ -264,26 +307,31 @@ const Home = () => {
                 @media (max-width: 1024px) {
                     .hero-3d {
                         flex-direction: column;
-                        padding-top: 100px; /* More space for fixed navbar */
+                        padding-top: 100px;
                         padding-bottom: 50px;
                         text-align: center;
-                        min-height: auto; /* Allow content to dictate height */
+                        min-height: auto;
                     }
                     .hero-title { font-size: 48px; }
-                    /* Make visual full width but shorter on mobile to not take too much vertical space */
-                    .sketchfab-embed-wrapper-hero { 
-                        width: 100%; 
-                        height: 50vh; /* Half screen height on mobile */
-                        max-height: 500px;
-                    } 
+                    /* Keep Hero visual as background (absolute) */
                     .hero-visual {
-                        position: relative; /* Stack normally on tablets/mobile? Or keep absolute? */
-                        /* Let's keep absolute but maybe adjust opacity or position */
                         position: absolute;
                         height: 100%;
                         width: 100%;
-                        opacity: 0.4; /* Fade it out more on mobile */
+                        opacity: 0.4;
                     }
+                    .sketchfab-embed-wrapper-hero { 
+                        width: 100%; 
+                        height: 50vh;
+                        max-height: 500px;
+                    }
+                    /* Only widen the secondary showcase */
+                    .sketchfab-embed-wrapper-small { 
+                        width: 100%; 
+                        max-width: 1200px;
+                        height: 60vh;
+                        max-height: 600px;
+                    } 
                     .mobile-column { flex-direction: column; text-align: center; gap: 40px; }
                     .hero-btns { justify-content: center; }
                 }
@@ -291,13 +339,78 @@ const Home = () => {
                 @media (max-width: 768px) {
                     .hero-title { font-size: 36px; }
                     .hero-subtitle { font-size: 16px; }
-                    .btn-primary-large { padding: 15px 30px; font-size: 16px; }
-                    .sketchfab-embed-wrapper-hero { height: 60vh; top: 0; }
-                    .hero-visual { opacity: 0.3; }
+                    .hero-btns { flex-direction: column; align-items: center; gap: 15px; width: 100%; }
+                    .btn-primary-large, .btn-secondary-large { width: 100%; justify-content: center; padding: 15px 20px; font-size: 16px; }
+
+                    /* Keep secondary showcase visible on mobile */
+                    .sketchfab-embed-wrapper-small {
+                        height: 50vh !important;
+                    }
                     .home-showcase-title { font-size: 32px; }
                     .home-showcase-subtitle { font-size: 16px; }
                     .home-cta-title { font-size: 32px; }
                     .home-cta-subtitle { font-size: 16px; }
+                }
+
+                /* Loading State Styles */
+                .hero-placeholder, .showcase-placeholder {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 140%;
+                    top: -20%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    /* Static Poster Image */
+                    background-size: cover !important;
+                    background-position: center !important;
+                    z-index: 1;
+                    transition: opacity 0.8s ease; /* Slower fade for smoothness */
+                }
+
+                .hero-placeholder {
+                    background: url('https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=1200');
+                }
+
+                .showcase-placeholder {
+                    background: url('https://images.unsplash.com/photo-1696446702371-92f7495b5254?auto=format&fit=crop&q=80&w=1000');
+                }
+
+                .placeholder-content {
+                    background: rgba(0,0,0,0.6);
+                    backdrop-filter: blur(10px);
+                    padding: 15px 25px;
+                    border-radius: 30px;
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    border: 1px solid rgba(255,255,255,0.1);
+                }
+
+                .hero-placeholder.fade-out, .showcase-placeholder.fade-out {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                
+                .loading-text {
+                    font-size: 13px;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                }
+
+                .loading-spinner {
+                    width: 24px;
+                    height: 24px;
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    border-radius: 50%;
+                    border-top-color: var(--primary);
+                    animation: spin 0.8s ease-in-out infinite;
+                }
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
                 }
             `}</style>
         </div>

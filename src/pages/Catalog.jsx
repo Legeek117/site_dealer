@@ -51,27 +51,36 @@ const Catalog = () => {
                 overflow: 'hidden',
                 border: '1px solid rgba(255,255,255,0.1)'
             }}>
-                <div style={{ position: 'relative', zIndex: 2, maxWidth: '650px' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 15px', borderRadius: '20px', backgroundColor: 'rgba(41, 151, 255, 0.1)', color: 'var(--primary)', fontSize: '12px', fontWeight: '700', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <div className="hero-content-wrapper" style={{ position: 'relative', zIndex: 2, maxWidth: '650px' }}>
+                    <div className="badge-new" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 15px', borderRadius: '20px', backgroundColor: 'rgba(41, 151, 255, 0.1)', color: 'var(--primary)', fontSize: '12px', fontWeight: '700', marginBottom: '20px', textTransform: 'uppercase', letterSpacing: '1px' }}>
                         <Zap size={14} /> Nouveautés Disponibles
                     </div>
-                    <h1 style={{ fontSize: '56px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.1', letterSpacing: '-2px' }}>
+                    <h1 style={{ fontWeight: '800', marginBottom: '20px', lineHeight: '1.1', letterSpacing: '-2px' }}>
                         La technologie <span className="text-primary">Premium</span> à votre portée.
                     </h1>
-                    <p style={{ fontSize: '18px', opacity: 0.7, marginBottom: '35px', lineHeight: '1.6' }}>
+                    <p style={{ opacity: 0.7, marginBottom: '35px', lineHeight: '1.6' }}>
                         Découvrez notre sélection rigoureuse d'appareils Apple et Samsung.
                         Qualité certifiée, garantie incluse et prix imbattables.
                     </p>
-                    <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                        <button onClick={scrollToStock} className="btn-primary" style={{ padding: '16px 32px', fontSize: '16px' }}>
+                    <div className="hero-actions" style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                        <button onClick={scrollToStock} className="btn-primary">
                             Voir tout le stock
                         </button>
                         <button
-                            onClick={() => { setIsBudgetMode(true); setTimeout(() => document.getElementById('budget-wizard')?.scrollIntoView({ behavior: 'smooth' }), 100); }}
-                            className="glass-card"
-                            style={{ padding: '16px 32px', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
+                            onClick={() => navigate('/budget')}
+                            className="glass-card btn-pulse"
+                            style={{
+                                padding: '12px 20px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                borderRadius: '14px',
+                                width: '100%',
+                                justifyContent: 'center'
+                            }}
                         >
-                            <span style={{ fontWeight: '800', fontSize: '20px' }}>CFA</span> Quel est votre budget ?
+                            <span style={{ fontWeight: '800', fontSize: '18px' }}>💰</span> Assistant Budget
                         </button>
                     </div>
                 </div>
@@ -84,18 +93,18 @@ const Catalog = () => {
 
             {/* Budget Wizard Section */}
             {isBudgetMode && (
-                <section id="budget-wizard" className="slide-up" style={{ marginBottom: '60px' }}>
-                    <div className="glass-card" style={{ padding: '40px', background: 'linear-gradient(135deg, rgba(41, 151, 255, 0.05), rgba(0,0,0,0.5))' }}>
-                        <div className="flex-between" style={{ marginBottom: '30px' }}>
+                <section id="budget-wizard" className="slide-up" style={{ marginBottom: '40px' }}>
+                    <div className="glass-card" style={{ padding: '30px', background: 'linear-gradient(135deg, rgba(41, 151, 255, 0.05), rgba(0,0,0,0.5))' }}>
+                        <div className="flex-between" style={{ marginBottom: '20px' }}>
                             <div>
-                                <h2 style={{ marginBottom: '5px' }}>Assistant Budget</h2>
-                                <p className="text-secondary">Glissez pour définir votre budget maximum</p>
+                                <h2 style={{ marginBottom: '5px', fontSize: '20px' }}>Assistant Budget</h2>
+                                <p className="text-primary" style={{ fontSize: '13px', fontWeight: '600' }}>⚠️ Minimum requis : 50 000 CFA</p>
                             </div>
-                            <button onClick={() => { setIsBudgetMode(false); setBudget(2000000); }} className="text-secondary" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Annuler</button>
+                            <button onClick={() => { setIsBudgetMode(false); setBudget(2000000); }} className="text-secondary" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>Fermer</button>
                         </div>
 
-                        <div style={{ textAlign: 'center', padding: '20px 0' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px', marginBottom: '10px' }}>
+                        <div style={{ textAlign: 'center', padding: '10px 0' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
                                 <input
                                     type="text"
                                     inputMode="numeric"
@@ -220,7 +229,7 @@ const Catalog = () => {
             </div>
 
             {/* Product Grid */}
-            <div className="grid-3 slide-up">
+            <div className="grid-3 slide-up grid-mobile-2col">
                 {filteredProducts.map(iphone => (
                     <div
                         key={iphone.id}
@@ -234,8 +243,7 @@ const Catalog = () => {
                             position: 'relative'
                         }}
                     >
-                        <div style={{
-                            height: '320px',
+                        <div className="product-card-image" style={{
                             background: '#0a0a0a',
                             display: 'flex',
                             alignItems: 'center',
@@ -350,7 +358,7 @@ const Catalog = () => {
                     }
                 }
             `}</style>
-        </div>
+        </div >
     );
 };
 

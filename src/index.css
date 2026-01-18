@@ -135,6 +135,28 @@ body {
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
+  /* Force 2 columns on mobile for product grids */
+  .grid-mobile-2col {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 15px !important;
+  }
+
+  .product-card-image {
+    height: 160px !important;
+  }
+
+  /* Make buttons smaller on mobile cards */
+  .product-card .btn-primary {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    width: 100%;
+  }
+}
+
+.product-card-image {
+  height: 320px;
+  width: 100%;
 }
 
 .page-container {
@@ -694,13 +716,86 @@ h3 {
 
 @media (max-width: 768px) {
   .grid-responsive-filters {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Make selects smaller on mobile */
+  .grid-responsive-filters select {
+    padding: 8px !important;
+    font-size: 13px !important;
+  }
+
+  .grid-responsive-filters label {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Compact Hero Mobile */
+  .catalog-hero {
+    padding: 20px 15px !important;
+    margin-bottom: 15px !important;
+    /* Reduced space */
+    border-radius: 20px !important;
+    min-height: auto !important;
+  }
+
+  .catalog-hero h1 {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Pulse Animation for CTA */
+  @keyframes pulse-shine {
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4);
+    }
+
+    70% {
+      box-shadow: 0 0 0 4px rgba(0, 113, 227, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(0, 113, 227, 0);
+    }
+  }
+
+  .btn-pulse {
+    animation: pulse-shine 2s infinite;
+    background: linear-gradient(135deg, var(--primary) 0%, #2997ff 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 700 !important;
+  }
+
+  .catalog-hero p {
+    font-size: 14px !important;
+    margin-bottom: 20px !important;
+    line-height: 1.4 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .catalog-hero .btn-primary,
+  .catalog-hero .glass-card {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hide the 'Nouveautés' badge on mobile to save space */
+  .catalog-hero .badge-premium,
+  .catalog-hero div[style*="Nouveautés"] {
+    display: none !important;
   }
 }
 
 /* Sales Layout */
 .sales-layout {
-  grid-template-columns: 2fr 1.2fr;
+  grid-template-columns: minmax(0, 2fr) 1.2fr;
 }
 
 .receipt-preview {

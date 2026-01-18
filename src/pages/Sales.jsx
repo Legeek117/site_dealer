@@ -30,7 +30,7 @@ const Sales = () => {
                 </div>
             </header>
 
-            <div className="grid-3 sales-layout" style={{ gridTemplateColumns: 'minmax(0, 2fr) 1.2fr' }}>
+            <div className="grid-3 sales-layout">
                 {/* Sales List */}
                 <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
                     <div style={{ overflowX: 'auto' }}>

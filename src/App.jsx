@@ -12,8 +12,10 @@ import Catalog from './pages/Catalog';
 import ProductDetailWrapper from './pages/ProductDetailWrapper';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import BudgetSearch from './pages/BudgetSearch';
 import './App.css';
 import { Shield, AlertTriangle } from 'lucide-react';
+import ScrollToTop from './components/ScrollToTop';
 
 class GlobalErrorBoundary extends React.Component {
   constructor(props) {
@@ -51,16 +53,24 @@ function AdminLayout({ children, activeTab, setActiveTab, onLogout }) {
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('isAdminAuthenticated') === 'true';
+  });
 
-  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogin = () => {
+    localStorage.setItem('isAdminAuthenticated', 'true');
+    setIsAuthenticated(true);
+  };
+
   const handleLogout = () => {
+    localStorage.removeItem('isAdminAuthenticated');
     setIsAuthenticated(false);
     setActiveTab('dashboard'); // Reset tab
   };
 
   return (
     <Router>
+      <ScrollToTop />
       <GlobalErrorBoundary>
         <div className="app-container">
           <Routes>
@@ -75,6 +85,7 @@ function App() {
                       <Catalog />
                     </div>
                   } />
+                  <Route path="/budget" element={<BudgetSearch />} />
                   <Route path="/product/:id" element={
                     <div className="page-container">
                       <ProductDetailWrapper />

@@ -71,7 +71,7 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-content">
-            <header className="flex-between" style={{ marginBottom: '40px' }}>
+            <header className="page-header">
                 <div>
                     <h1>Tableau de bord</h1>
                     <p className="text-secondary">Aperçu de votre activité en temps réel</p>

@@ -18,8 +18,9 @@ const Navbar = () => {
     const navLinks = [
         { name: 'Accueil', path: '/' },
         { name: 'Boutique', path: '/catalog' },
-        { name: 'Nouveautés', path: '/catalog' },
+        { name: 'Budget', path: '/budget' },
     ];
+    // Navigation Links Definition
 
     const isAuthPage = location.pathname.startsWith('/admin') || location.pathname === '/login';
     if (isAuthPage) return null;
@@ -29,7 +30,7 @@ const Navbar = () => {
             <div className="navbar-container">
                 <Link to="/" className="navbar-logo">
                     <Smartphone size={28} color="var(--primary)" />
-                    <span style={{ fontWeight: '800', letterSpacing: '-1px', fontSize: '20px' }}>DEALER<span className="text-primary">PRO</span></span>
+                    <span className="logo-text" style={{ fontWeight: '800', letterSpacing: '-1px', fontSize: '20px' }}>DEALER<span className="text-primary">PRO</span></span>
                 </Link>
 
                 {/* Desktop Menu */}
@@ -175,6 +176,21 @@ const Navbar = () => {
                     .mobile-nav-link {
                         font-size: 20px;
                     }
+                    
+                    /* Explicitly handle visibility in component styles */
+                    .desktop-only { display: none !important; }
+                    .mobile-only { display: flex !important; }
+                    
+                    /* Hide logo text on very small screens to prevent overlap */
+                    @media (max-width: 380px) {
+                        .logo-text { display: none; }
+                    }
+                }
+                
+                /* Desktop styles (outside media query) */
+                @media (min-width: 769px) {
+                    .mobile-only { display: none !important; }
+                    .desktop-only { display: flex !important; }
                 }
             `}</style>
         </nav>
