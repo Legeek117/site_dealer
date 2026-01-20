@@ -7,7 +7,7 @@ const ProductDetailWrapper = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const product = MOCK_IPHONES.find(p => p.id === parseInt(id));
+    const product = MOCK_IPHONES.find(p => p.id === id);
 
     if (!product) {
         return (
