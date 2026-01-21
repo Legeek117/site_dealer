@@ -31,6 +31,10 @@ const ImageCarousel = ({ images = [] }) => {
                     alt={`Product ${currentIndex + 1}`}
                     style={{ width: '100%', height: '100%', objectFit: 'contain', cursor: 'pointer' }}
                     onClick={() => setIsFullScreen(true)}
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800';
+                    }}
                 />
 
                 {images.length > 1 && (

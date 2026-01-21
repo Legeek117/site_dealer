@@ -12,9 +12,13 @@ const ProductDetail = ({ product, onBack }) => {
     // 3D Model mapping
     const getSketchfabId = (model) => {
         const m = model.toLowerCase();
+        // Check most specific models first
+        if (m.includes('17 pro')) return 'e88c8489a48b494bb4db178c2907f737';
         if (m.includes('15 pro max')) return '090e561ffd49437ab5185ed9d07903b2';
         if (m.includes('15 pro')) return '090e561ffd49437ab5185ed9d07903b2';
-        if (m.includes('17 pro')) return 'e88c8489a48b494bb4db178c2907f737';
+        if (m.includes('15')) return '090e561ffd49437ab5185ed9d07903b2';
+        if (m.includes('14')) return 'adc4ea80bf314a14b8addcb687e6506a';
+        if (m.includes('13')) return 'd064458166e146779cb7bf802d2c0056';
         if (m.includes('x') || m.includes('11') || m.includes('12')) return '02f12869e95e4695a15e3a611398742b';
         return null;
     };
@@ -83,13 +87,15 @@ const ProductDetail = ({ product, onBack }) => {
                     {viewMode === 'photos' ? (
                         <ImageCarousel images={product.images} />
                     ) : (
-                        <div className="sketchfab-viewer glass-card">
+                        <div className="sketchfab-viewer glass-card" style={{ padding: '0', overflow: 'hidden', height: '500px', borderRadius: '20px' }}>
                             <iframe
                                 title={product.model}
                                 frameBorder="0"
                                 allowFullScreen
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; xr-spatial-tracking"
-                                src={`https://sketchfab.com/models/${sketchfabId}/embed?autostart=1&transparent=1&ui_infos=0&ui_controls=0&ui_watermark=0&ui_stop=0`}
+                                loading="lazy"
+                                allow="autoplay; fullscreen; xr-spatial-tracking"
+                                style={{ width: '100%', height: '100%' }}
+                                src={`https://sketchfab.com/models/${sketchfabId}/embed?autospin=0.5&autostart=1&transparent=1&ui_controls=1&ui_infos=0&ui_watermark=0&ui_stop=0`}
                             ></iframe>
                         </div>
                     )}
